@@ -1,12 +1,15 @@
 ## 1. Model Architectures
 Both models use identical hyperparameters and preprocessing for a fair comparison.
-LSTM Model:
+
+# LSTM Model:
 Embedding(vocab_size, 64) → Dropout(0.3) → LSTM(128) → Dropout(0.3) → Dense(64,
 ReLU) → Dense(1, Sigmoid)
-Bi-LSTM Model:
+
+# Bi-LSTM Model:
 Embedding(vocab_size, 64) → Dropout(0.3) → Bidirectional(LSTM(128)) → Dropout(0.3)
 → Dense(64, ReLU) → Dense(1, Sigmoid)
-Shared Configuration:
+
+ # Shared Configuration:
 • Preprocessing: URL/HTML removal, user_mention removal, stopword removal, non-
 alphabet removal, lowercase tokenization.
 • Vocabulary size ~17,000 words; max sequence length ~15 tokens.
