@@ -22,13 +22,15 @@ Embedding(vocab_size, 64) → Dropout(0.3) → Bidirectional(LSTM(128)) → Drop
 
     Regularization: Dropout(0.3),EarlyStopping (patience=3, restore best weights), validation split 10%.
 ## 2. Performance Comparison
+![alt text](image.png)
+
+![alt text](lstm_bilstm_performance.png)
 
 
 
+# 3. Discussion
 
-## 3. Discussion
-
-# Why Bi-LSTM Doesn't Significantly Improve Performance
+## Why Bi-LSTM Doesn't Significantly Improve Performance
 Despite processing sequences in both forward and backward directions, Bi-LSTM achieves
 only a negligible +0.03% improvement over standard LSTM. Three factors explain this.
 First, tweets are very short (~15 tokens after preprocessing). A single forward LSTM pass
@@ -42,7 +44,7 @@ loss rises while training loss falls — but Bi-LSTM's validation accuracy peaks
 declines more sharply (83% → 80.5%), indicating the extra capacity memorizes noise rather
 than learning generalizable patterns.
 
-# Why Stacking LSTM/Bi-LSTM Layers Is Not Optimal
+## Why Stacking LSTM/Bi-LSTM Layers Is Not Optimal
 Stacking multiple recurrent layers is not beneficial for this task for three reasons. First,
 stacked architectures are designed to learn hierarchical temporal patterns over long sequences
 such as paragraphs or documents. Tweets at ~15 tokens are too short for multi-level
@@ -63,7 +65,8 @@ generalization stable. Compared to Bi-LSTM and stacked alternatives, this archit
 achieves equivalent test performance with fewer parameters, faster training, and better
 validation stability — making it the most practical and efficient model for this dataset and
 task.
-4. Conclusion
+
+# 4. Conclusion
 Both LSTM and Bi-LSTM achieve approximately 81.7% test accuracy. The 0.03% difference
 in favour of Bi-LSTM is statistically insignificant. Bidirectional context and stacked layers
 provide no meaningful benefit for short-text, keyword-driven classification with a moderately
