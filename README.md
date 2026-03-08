@@ -1,25 +1,34 @@
-## 1. Model Architectures
+# 1. Model Architectures
 Both models use identical hyperparameters and preprocessing for a fair comparison.
 
-# LSTM Model:
+## LSTM Model:
 Embedding(vocab_size, 64) → Dropout(0.3) → LSTM(128) → Dropout(0.3) → Dense(64,
 ReLU) → Dense(1, Sigmoid)
 
-# Bi-LSTM Model:
+## Bi-LSTM Model:
 Embedding(vocab_size, 64) → Dropout(0.3) → Bidirectional(LSTM(128)) → Dropout(0.3)
 → Dense(64, ReLU) → Dense(1, Sigmoid)
 
- # Shared Configuration:
-• Preprocessing: URL/HTML removal, user_mention removal, stopword removal, non-
-alphabet removal, lowercase tokenization.
-• Vocabulary size ~17,000 words; max sequence length ~15 tokens.
-• Optimizer: Adam
-• Loss: Binary Crossentropy
-• Batch size: 64; Max epochs: 10. Regularization: Dropout(0.3), EarlyStopping
-(patience=3, restore best weights), validation split 10%.
-2. Performance Comparison
-3. Discussion
-Why Bi-LSTM Doesn't Significantly Improve Performance
+## Shared Configuration:
+    • Preprocessing: URL/HTML removal, user_mention removal, stopword removal, non- alphabet removal, lowercase tokenization.
+
+    • Vocabulary size ~17,000 words; max sequence length   ~15 tokens.
+
+    • Optimizer: Adam
+
+    • Loss: Binary Crossentropy
+
+    • Batch size: 64; Max epochs: 10. 
+
+    Regularization: Dropout(0.3),EarlyStopping (patience=3, restore best weights), validation split 10%.
+## 2. Performance Comparison
+
+
+
+
+## 3. Discussion
+
+# Why Bi-LSTM Doesn't Significantly Improve Performance
 Despite processing sequences in both forward and backward directions, Bi-LSTM achieves
 only a negligible +0.03% improvement over standard LSTM. Three factors explain this.
 First, tweets are very short (~15 tokens after preprocessing). A single forward LSTM pass
@@ -32,7 +41,8 @@ increases overfitting risk. As seen in the training curves, both models overfit 
 loss rises while training loss falls — but Bi-LSTM's validation accuracy peaks earlier and
 declines more sharply (83% → 80.5%), indicating the extra capacity memorizes noise rather
 than learning generalizable patterns.
-Why Stacking LSTM/Bi-LSTM Layers Is Not Optimal
+
+# Why Stacking LSTM/Bi-LSTM Layers Is Not Optimal
 Stacking multiple recurrent layers is not beneficial for this task for three reasons. First,
 stacked architectures are designed to learn hierarchical temporal patterns over long sequences
 such as paragraphs or documents. Tweets at ~15 tokens are too short for multi-level
